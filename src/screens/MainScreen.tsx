@@ -1,8 +1,9 @@
-import React from 'react';
-import {View, StyleSheet, FlatList, Image, Keyboard} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, StyleSheet, FlatList, Image, Keyboard, Dimensions} from 'react-native';
 import {AddTodo} from "../components/AddTodo";
 import {Todo} from "../components/Todo";
 import {TodoInterface} from "../interfaces/TodoInterface";
+import {THEME} from "../theme";
 
 interface IProps {
     todos: TodoInterface[],
@@ -12,13 +13,30 @@ interface IProps {
 }
 
 export const MainScreen = (props: IProps) => {
+
+    const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2);
+
+    useEffect(() => {
+        const update = () => {
+            setDeviceWidth(Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2)
+        }
+        Dimensions.addEventListener('change', update);
+
+        return () => {
+            Dimensions.removeEventListener('change', update)
+        }
+    })
+
     let content = (
+        <View style={{width: deviceWidth}}>
             <FlatList
+                onScroll={() => Keyboard.dismiss()}
                 keyExtractor={item => item.id.toString()}
                 data={props.todos}
                 renderItem={({item}) =>
                     (<Todo todo={item} showTodo={props.openTodo} removeTodo={props.removeTodo}/>)}
             />
+        </View>
     );
 
     if (!props.todos.length) {

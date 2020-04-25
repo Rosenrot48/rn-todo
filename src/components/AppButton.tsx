@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native';
 import {AppBoldText} from "./AppText";
 import {THEME} from "../theme";
 
@@ -12,8 +12,9 @@ interface IProps {
 }
 
 export const AppButton = (props: IProps) => {
+    const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
     return (
-        <TouchableOpacity
+        <Wrapper
             onPress={props.onPress}
             activeOpacity={0.5}
             onLongPress={props.onLongPress}
@@ -29,7 +30,7 @@ export const AppButton = (props: IProps) => {
                     {props.children}
                 </AppBoldText>
             </View>
-        </TouchableOpacity>
+        </Wrapper>
     )
 };
 

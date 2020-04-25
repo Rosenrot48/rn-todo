@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {THEME} from '../theme';
 import {AppRegularText} from "./AppText";
 
@@ -10,7 +10,10 @@ export interface IProps {
 
 export const Navbar = (props: IProps) => {
     return(
-        <View style={styles.navbar}>
+        <View style={{...styles.navbar, ...Platform.select({
+                ios: styles.navbarIOS,
+                android: styles.navbarAndroid
+            })}}>
             <AppRegularText style={styles.text}>{props.title}</AppRegularText>
         </View>
     )
@@ -18,16 +21,23 @@ export const Navbar = (props: IProps) => {
 
 const styles = StyleSheet.create({
     navbar : {
-        // flex: 1,
-        // flexDirection: 'column',
+        flex: 1,
         height: 70,
         alignItems: 'center',
         justifyContent: 'flex-end',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    navbarAndroid: {
         backgroundColor: THEME.NAVBAR_COLOR,
-        paddingBottom: 5
+
+    },
+    navbarIOS: {
+      borderBottomColor: THEME.MAIN_COLOR,
+      borderBottomWidth: 1
     },
     text : {
-        color: '#fff',
+        color: Platform.OS === 'ios' ? THEME.MAIN_COLOR: '#fff',
         fontSize: 20
     }
 });

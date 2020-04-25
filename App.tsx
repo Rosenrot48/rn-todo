@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Alert} from 'react-native';
+import {StyleSheet, View, Alert, Dimensions} from 'react-native';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo';
 
@@ -8,6 +8,7 @@ import {Navbar} from './src/components/Navbar';
 import {TodoInterface} from "./src/interfaces/TodoInterface";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoScreen} from "./src/screens/TodoScreen";
+import {THEME} from "./src/theme";
 
 
 const loadApplication = async () => {
@@ -98,8 +99,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
-    paddingVertical: 20,
+      paddingHorizontal: THEME.PADDING_HORIZONTAL,
+      paddingVertical: 20,
+    // height: (Dimensions.get('window').height / 2)
     // resizeMode: 'contain'
     height: '88%'
     // flex: 1,
