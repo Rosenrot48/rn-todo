@@ -1,70 +1,107 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Alert} from 'react-native';
+import * as Font from 'expo-font';
+import {AppLoading} from 'expo';
+
+
 import {Navbar} from './src/components/Navbar';
 import {TodoInterface} from "./src/interfaces/TodoInterface";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoScreen} from "./src/screens/TodoScreen";
 
 
+const loadApplication = async () => {
+    await Font.loadAsync({
+        'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+        'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
+        'roboto-italic': require('./assets/fonts/Roboto-Italic.ttf'),
+    })
+};
+
 
 export default function App() {
-  const [todoId, setTodoId] = useState(null);
-  const [todos, setTodos] = useState([]);
-  const addTodo = (title: string) => {
-    setTodos(prevState => [
-        ...prevState,
-      {
-        id: Date.now(),
-        title
-      }
-    ])
-  };
-
-  const removeTodo = (todo: TodoInterface) => {
-    Alert.alert(
-        'Внимание',
-        `Удалить "${todo.title.trim()}"?`,
-        [
-          {
-            text: 'Отмена',
-            style: 'cancel',
-            // onPress: () => {
-            //   console.log('Canceled')}
-          },
-          {
-            text: 'Удалить',
-            style: 'destructive',
-            onPress: () => {
-              setTodoId(null);
-              setTodos(prevState => prevState.filter(value => value !== todo));
+    const [isReady, setIsReady] = useState(false);
+    const [todoId, setTodoId] = useState(null);
+    const [todos, setTodos] = useState([]);
+    const addTodo = (title: string) => {
+        setTodos(prevState => [
+            ...prevState,
+            {
+                id: Date.now(),
+                title
             }
-          }
-        ],
-        {cancelable: false}
-    )
-    // setTodos(prevState => prevState.filter(value => value !== todo));
-  };
+        ])
+    };
 
-  let content = <MainScreen todos={todos} addTodo={addTodo} removeTodo={removeTodo} openTodo={(id: any) => setTodoId(id)}/>
-  if(todoId) {
-    const selectedTodo: TodoInterface = todos.find(todo => todo.id === todoId);
-    content = <TodoScreen removeItem={removeTodo} goBack={() => setTodoId(null)} todo={selectedTodo}/>
-  }
+    const removeTodo = (todo: TodoInterface) => {
+        Alert.alert(
+            'Внимание',
+            `Удалить "${todo.title.trim()}"?`,
+            [
+                {
+                    text: 'Отмена',
+                    style: 'cancel',
+                    // onPress: () => {
+                    //   console.log('Canceled')}
+                },
+                {
+                    text: 'Удалить',
+                    style: 'destructive',
+                    onPress: () => {
+                        setTodoId(null);
+                        setTodos(prevState => prevState.filter(value => value !== todo));
+                    }
+                }
+            ],
+            {cancelable: false}
+        )
+        // setTodos(prevState => prevState.filter(value => value !== todo));
+    };
+    const updateTodo = (todo: TodoInterface) => {
+        setTodos((prevState: TodoInterface[]) =>
+            prevState.map((prevTodo: TodoInterface) => {
+                if (prevTodo.id === todo.id) {
+                    prevTodo.title = todo.title;
+                }
+                return prevTodo;
+            })
+        )
+    }
 
-  return (
-    <View >
-      <Navbar title='Todo App'/>
-      <View style={styles.container}>
-        {content}
-      </View>
-    </View>
-  );
+    let content = <MainScreen todos={todos} addTodo={addTodo} removeTodo={removeTodo} openTodo={(id: any) => setTodoId(id)}/>
+    if(todoId) {
+        const selectedTodo: TodoInterface = todos.find(todo => todo.id === todoId);
+        content = <TodoScreen editSave={updateTodo} removeItem={removeTodo} goBack={() => setTodoId(null)} todo={selectedTodo}/>
+    }
+
+    if (!isReady) {
+        return  (
+            <AppLoading
+                startAsync={loadApplication}
+                onError={error => {
+                    console.log(error)}
+                }
+                onFinish={() => setIsReady(true)}
+                />
+        )
+    }
+
+    return (
+        <View >
+            <Navbar title='Todo App'/>
+            <View style={styles.container}>
+                {content}
+            </View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 30,
-    paddingVertical: 20
+    paddingVertical: 20,
+    // resizeMode: 'contain'
+    height: '88%'
     // flex: 1,
     // flexDirection: 'column',
     // backgroundColor: '#000',

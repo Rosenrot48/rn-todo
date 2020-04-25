@@ -1,6 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {THEME} from '../theme';
+import {AppRegularText} from "./AppText";
 
 
 export interface IProps {
@@ -10,7 +11,7 @@ export interface IProps {
 export const Navbar = (props: IProps) => {
     return(
         <View style={styles.navbar}>
-            <Text style={styles.text}>{props.title}</Text>
+            <AppRegularText style={styles.text}>{props.title}</AppRegularText>
         </View>
     )
 }

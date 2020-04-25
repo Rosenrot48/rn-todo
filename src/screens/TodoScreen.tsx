@@ -1,33 +1,56 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {TodoInterface} from "../interfaces/TodoInterface";
+import {StyleSheet, View} from 'react-native';
+import {FontAwesome, AntDesign} from '@expo/vector-icons';
+
+
+import {TodoInterface} from '../interfaces/TodoInterface';
 import {THEME} from '../theme';
-import {AppCard} from "../components/AppCard";
-import {EditModal} from "../components/EditModal";
+import {AppCard} from '../components/AppCard';
+import {EditModal} from '../components/EditModal';
+import {AppBoldText} from '../components/AppText';
+import {AppButton} from '../components/AppButton';
 
 interface IProps {
     todo: TodoInterface
     goBack: any,
     removeItem: any,
+    editSave: any
 }
 
 export const TodoScreen = (props: IProps) => {
     const [modal, setModal] = useState(false);
+
+    const onEditSave = (title: string) => {
+        const todo: TodoInterface = {
+            id: props.todo.id,
+            title
+        };
+        props.editSave(todo);
+        setModal(false);
+    }
+
     return (
         <View>
-            <EditModal visible={modal} onCancel={() => setModal(false)}/>
+            <EditModal onSave={onEditSave} value={props.todo.title} visible={modal} onCancel={() => setModal(false)}/>
             <AppCard style={styles.card}>
-                <Text style={styles.title}>{props.todo.title}</Text>
-                <Button title='Ред.' onPress={() => setModal(true)}/>
+                <AppBoldText style={styles.title}>{props.todo.title}</AppBoldText>
+                <AppButton onPress={() => setModal(true)}>
+                    <FontAwesome name='edit' size={20}/>
+                </AppButton>
             </AppCard>
            <View style={styles.buttons}>
                <View style={styles.button}>
-                <Button title='Назад' color={THEME.MAIN_COLOR} onPress={() => props.goBack()}/>
+                   <AppButton buttonColor={THEME.MAIN_COLOR} onPress={() => props.goBack()}>
+                       <AntDesign name={'back'} size={18}/>
+                   </AppButton>
                </View>
                <View style={styles.button}>
-                   <Button
-                       title='Удалить' color={THEME.DANGER_COLOR}
-                       onPress={props.removeItem.bind(null, props.todo)}/>
+                   <AppButton
+                       buttonColor={THEME.DANGER_COLOR}
+                       onPress={props.removeItem.bind(null, props.todo)}
+                   >
+                       <FontAwesome name='remove' size={20}/>
+                   </AppButton>
                </View>
            </View>
         </View>

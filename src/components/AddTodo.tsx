@@ -1,6 +1,9 @@
 import React from 'react';
-import {View, StyleSheet, TextInput, Button, Alert} from 'react-native';
+import {View, StyleSheet, TextInput, Alert, Keyboard} from 'react-native';
+import {Entypo} from '@expo/vector-icons';
+
 import {THEME} from '../theme';
+import {AppButton} from "./AppButton";
 
 export interface IProps {
     onSubmit: any
@@ -16,6 +19,7 @@ export const AddTodo = ({onSubmit}: IProps) => {
         if (value.trim()) {
             onSubmit(value);
             setValue('');
+            Keyboard.dismiss();
         } else {
             Alert.alert('Введите значение')
         }
@@ -28,7 +32,26 @@ export const AddTodo = ({onSubmit}: IProps) => {
                 value={value.toString()}
                 placeholder='Введите название дела!'
             />
-            <Button title='Добавить' color={THEME.MAIN_COLOR} disabled={!value.trim()}  onPress={addPressHandler}/>
+            <AppButton
+                buttonColor={THEME.MAIN_COLOR}
+                onPress={addPressHandler}
+                disabled={!value.trim()}
+            >
+                <Entypo name={'add-to-list'} size={20}/>
+            </AppButton>
+            {/*<Entypo.Button*/}
+            {/*    title='Добавить'*/}
+            {/*    name="add-to-list"*/}
+            {/*    disabled={!value.trim()}*/}
+            {/*    onPress={addPressHandler}*/}
+            {/*>*/}
+            {/*    Добавить*/}
+            {/*</Entypo.Button>*/}
+            {/*<Button */}
+            {/*    title='Добавить'*/}
+            {/*    color={THEME.MAIN_COLOR}*/}
+            {/*    disabled={!value.trim()}*/}
+            {/*    onPress={addPressHandler}/>*/}
         </View>
     )
 }
@@ -40,7 +63,7 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     input: {
-        width: '70%',
+        width: '60%',
         marginRight: 10,
         borderBottomWidth: 2,
         borderBottomColor: THEME.MAIN_COLOR,

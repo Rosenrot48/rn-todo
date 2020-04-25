@@ -1,6 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {TodoInterface} from '../interfaces/TodoInterface';
+import {AppRegularText} from './AppText';
 
 
 interface IProp {
@@ -18,7 +19,7 @@ export const Todo = (props: IProp) => {
             onLongPress={props.removeTodo.bind(null, props.todo)}
         >
         <View style={styles.todo}>
-            <Text>{props.todo.title}</Text>
+            <AppRegularText>{props.todo.title}</AppRegularText>
         </View>
         </TouchableOpacity>
 );
@@ -33,5 +34,5 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
         borderRadius: 5,
         marginBottom: 10
-    }
+    },
 })
