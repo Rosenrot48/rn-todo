@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TextInput, Button, Modal, Alert} from 'react-native';
-import {THEME} from "../theme";
-import {AppButton} from "./AppButton";
+import {View, StyleSheet, TextInput, Modal, Alert, Dimensions} from 'react-native';
+import {THEME} from '../theme';
+import {AppButton} from './AppButton';
 
 interface IProps {
     visible: boolean,
@@ -9,13 +9,13 @@ interface IProps {
     value: string,
     onSave: any
 }
-
-interface IState {
-}
-
-export const EditModal = (props: IProps, state: IState) => {
-
+export const EditModal = (props: IProps) => {
     const [title, setTitle] = useState(props.value);
+
+    const cancelHandler = () => {
+        setTitle(props.value);
+        props.onCancel();
+    }
     const saveHandler = () => {
        if (!title.trim().length) {
            Alert.alert('Упс...', `Нельзя сохранить пустое название :(`)
@@ -38,11 +38,12 @@ export const EditModal = (props: IProps, state: IState) => {
                     maxLength={64}
                     value={title}
                     onChangeText={setTitle}
+                    autoFocus={true}
                 />
                 <View style={styles.buttons}>
                     <AppButton
                         children='Отменить'
-                        onPress={() => props.onCancel()}
+                        onPress={cancelHandler}
                         buttonColor={THEME.DANGER_COLOR}/>
                     <AppButton
                         buttonColor={THEME.SUBMIT_COLOR}
@@ -64,7 +65,8 @@ const styles = StyleSheet.create({
     },
     wrap: {
         flex: 1,
-        justifyContent: 'center',
+        paddingTop: Dimensions.get('screen').height / 3,
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
     buttons: {
@@ -78,4 +80,4 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         overflow: 'hidden'
     }
-})
+});

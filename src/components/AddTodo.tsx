@@ -3,13 +3,10 @@ import {View, StyleSheet, TextInput, Alert, Keyboard} from 'react-native';
 import {Entypo} from '@expo/vector-icons';
 
 import {THEME} from '../theme';
-import {AppButton} from "./AppButton";
+import {AppButton} from './AppButton';
 
 export interface IProps {
     onSubmit: any
-}
-interface IState {
-
 }
 
 export const AddTodo = ({onSubmit}: IProps) => {
@@ -39,19 +36,6 @@ export const AddTodo = ({onSubmit}: IProps) => {
             >
                 <Entypo name={'add-to-list'} size={20}/>
             </AppButton>
-            {/*<Entypo.Button*/}
-            {/*    title='Добавить'*/}
-            {/*    name="add-to-list"*/}
-            {/*    disabled={!value.trim()}*/}
-            {/*    onPress={addPressHandler}*/}
-            {/*>*/}
-            {/*    Добавить*/}
-            {/*</Entypo.Button>*/}
-            {/*<Button */}
-            {/*    title='Добавить'*/}
-            {/*    color={THEME.MAIN_COLOR}*/}
-            {/*    disabled={!value.trim()}*/}
-            {/*    onPress={addPressHandler}/>*/}
         </View>
     )
 }
@@ -68,4 +52,4 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: THEME.MAIN_COLOR,
     }
-})
+});

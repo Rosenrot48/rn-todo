@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {THEME} from '../theme';
-import {AppRegularText} from "./AppText";
+import {AppRegularText} from './AppText';
 
 
 export interface IProps {
@@ -17,11 +17,10 @@ export const Navbar = (props: IProps) => {
             <AppRegularText style={styles.text}>{props.title}</AppRegularText>
         </View>
     )
-}
+};
 
 const styles = StyleSheet.create({
     navbar : {
-        flex: 1,
         height: 70,
         alignItems: 'center',
         justifyContent: 'flex-end',

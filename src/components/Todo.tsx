@@ -2,16 +2,12 @@ import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {TodoInterface} from '../interfaces/TodoInterface';
 import {AppRegularText} from './AppText';
-
-
 interface IProp {
     todo: TodoInterface,
     showTodo: any,
     removeTodo: any
 }
-
 export const Todo = (props: IProp) => {
-    //             onPress={() => console.log('touched', props.todo.id)}
     return (
         <TouchableOpacity
             activeOpacity={0.4}
@@ -23,7 +19,7 @@ export const Todo = (props: IProp) => {
         </View>
         </TouchableOpacity>
 );
-}
+};
 
 const styles = StyleSheet.create({
     todo: {

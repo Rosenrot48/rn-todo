@@ -3,5 +3,5 @@ export const THEME = {
     MAIN_COLOR: '#52ab50',
     NAVBAR_COLOR: '#438c41',
     SUBMIT_COLOR: '#6b9aff',
-    PADDING_HORIZONTAL: 50
+    PADDING_HORIZONTAL: 30
 }

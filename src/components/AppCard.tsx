@@ -1,8 +1,5 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {TodoInterface} from "../interfaces/TodoInterface";
-import {THEME} from "../theme";
-
 interface IProps {
     style: any,
     children: any,
@@ -13,7 +10,7 @@ export const AppCard = (props: IProps) => (
     <View style={ {...styles.default, ...props.style } }>
         {props.children}
     </View>
-)
+);
 
 const styles = StyleSheet.create({
     default: {
@@ -29,4 +26,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 10
     }
-})
+});

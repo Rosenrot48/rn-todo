@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native';
-import {AppBoldText} from "./AppText";
-import {THEME} from "../theme";
-
+import {AppBoldText} from './AppText';
+import {THEME} from '../theme';
 interface IProps {
     children?: any,
     onPress?: any,
@@ -10,9 +9,8 @@ interface IProps {
     buttonColor?: any
     disabled?: boolean
 }
-
 export const AppButton = (props: IProps) => {
-    const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
+    const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
     return (
         <Wrapper
             onPress={props.onPress}
@@ -44,8 +42,8 @@ const styles = StyleSheet.create({
        justifyContent: 'center'
    },
     buttonDisabled: {
-        backgroundColor: "#ccc",
-        color: "#999"
+        backgroundColor: '#ccc',
+        color: '#999'
     },
     buttonText: {
        color: '#fff'
